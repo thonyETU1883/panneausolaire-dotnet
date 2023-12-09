@@ -15,6 +15,9 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        DateTime date = DateTime.Parse("2023-12-01");
+        Departement departement = new Departement("departement1","departementA");
+        double capacite = departement.getcapacitepanneau(null);
         return View();
     }
 
@@ -22,6 +25,13 @@ public class HomeController : Controller
     {
         return View();
     }
+
+    public IActionResult versmanger()
+    {
+        return View("manger");
+    }
+
+        
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
