@@ -25,10 +25,10 @@ INSERT INTO departement_salle VALUES
 ;
 
 INSERT INTO source VALUES 
-('panneau' || nextval('panneau_sequence')::TEXT,1500,'W',0),
-('panneau' || nextval('panneau_sequence')::TEXT,2000,'W',0),
-('batterie' || nextval('batterie_sequence')::TEXT,4000,'W',1),
-('batterie' || nextval('batterie_sequence')::TEXT,3000,'W',1)
+('panneau' || nextval('panneau_sequence')::TEXT,1500,'W',0,100),
+('panneau' || nextval('panneau_sequence')::TEXT,2000,'W',0,100),
+('batterie' || nextval('batterie_sequence')::TEXT,4000,'W',1,50),
+('batterie' || nextval('batterie_sequence')::TEXT,3000,'W',1,50)
 ;
 
 INSERT INTO departement_source VALUES 

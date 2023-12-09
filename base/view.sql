@@ -47,7 +47,7 @@ GROUP BY date,id_salle
 */
 
 CREATE VIEW nombre_salle_moyenne AS 
-SELECT departement_salle.id_departement,SUM(moyenne)/COUNT(*) as moyenne_total,to_char(date, 'Day') as name_day 
+SELECT departement_salle.id_departement,SUM(moyenneday)/COUNT(*) as moyenne_total,to_char(date, 'Day') as name_day 
 FROM nombre_salle_view 
 JOIN departement_salle ON departement_salle.id_salle = nombre_salle_view.id_salle
 GROUP BY name_day,departement_salle.id_departement
@@ -77,14 +77,14 @@ GROUP BY name_day,departement_salle.id_departement
         departement1   | batterie2
 
     resultat : 
-        id_departement | puissance_total  | typesource |
-        ---------------+-----------------+-------+-------------
-        departement1    1500                      0
-        departement1    7000                      1
+         id_departement | puissance_total | typesource
+        ----------------+-----------------+------------
+        departement1   |            3500 |          1
+        departement1   |            1500 |          0
 */
 
 CREATE VIEW puisssance_source_departement AS
-SELECT id_departement,(SUM(capacite)) as puissance_total,typesource 
+SELECT id_departement,(SUM(capacite*(pourcentage/100))) as puissance_total,typesource 
 FROM departement_source
 JOIN source ON departement_source.id_source = source.id_source
 GROUP BY id_departement,typesource
