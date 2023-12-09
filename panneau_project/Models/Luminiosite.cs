@@ -24,21 +24,21 @@ namespace panneau_project.Models;
 
 
 class Luminiosite{
-    Timestamp Dateheure;
+    DateTime Dateheure;
     int Niveau;
     String Id_departement;
     double Puissance_panneau;
 
     public Luminiosite(){}
 
-    public Luminiosite(Timestamp dateheure,int niveau,String id_departement,double puissance_panneau){
+    public Luminiosite(DateTime dateheure,int niveau,String id_departement,double puissance_panneau){
         this.setDateheure(dateheure);
         this.setNiveau(niveau);
         this.setId_departement(id_departement);
         this.setPuissance_panneau(puissance_panneau);
     }
 
-    public void setDateheure(Timestamp dateheure){
+    public void setDateheure(DateTime dateheure){
         this.Dateheure = dateheure;
     }
 
@@ -54,7 +54,7 @@ class Luminiosite{
         this.Puissance_panneau = puissance_panneau;
     }
 
-    public Timestamp getDateheure(){
+    public DateTime getDateheure(){
         return this.Dateheure;
     }
 

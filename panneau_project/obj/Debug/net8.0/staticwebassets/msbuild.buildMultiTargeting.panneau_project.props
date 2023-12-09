@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\panneau_project.props" />
+</Project>

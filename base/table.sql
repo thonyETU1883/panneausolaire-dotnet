@@ -30,7 +30,8 @@ CREATE TABLE source (
     id_source VARCHAR(100) PRIMARY KEY,
     capacite DOUBLE PRECISION,
     unite VARCHAR(5),
-    typesource INTEGER
+    typesource INTEGER,
+    pourcentage DOUBLE PRECISION
 );
 
 CREATE TABLE departement_source (
