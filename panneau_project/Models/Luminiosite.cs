@@ -28,14 +28,16 @@ class Luminiosite{
     int Niveau;
     String Id_departement;
     double Puissance_panneau;
+    double Reste_batterie;
 
     public Luminiosite(){}
 
-    public Luminiosite(DateTime dateheure,int niveau,String id_departement,double puissance_panneau){
+    public Luminiosite(DateTime dateheure,int niveau,String id_departement,double puissance_panneau,double reste_batterie){
         this.setDateheure(dateheure);
         this.setNiveau(niveau);
         this.setId_departement(id_departement);
         this.setPuissance_panneau(puissance_panneau);
+        this.setReste_batterie(reste_batterie);
     }
 
     public void setDateheure(DateTime dateheure){
@@ -54,6 +56,13 @@ class Luminiosite{
         this.Puissance_panneau = puissance_panneau;
     }
 
+    public void setReste_batterie(double reste_batterie){
+        if(reste_batterie < 0){
+            reste_batterie = 0;
+        }
+        this.Reste_batterie=reste_batterie;
+    }
+
     public DateTime getDateheure(){
         return this.Dateheure;
     }
@@ -68,6 +77,10 @@ class Luminiosite{
 
     public double getPuissance_panneau(){
         return this.Puissance_panneau;
+    }
+
+    public double getReste_batterie(){
+        return this.Reste_batterie;
     }
 } 
 

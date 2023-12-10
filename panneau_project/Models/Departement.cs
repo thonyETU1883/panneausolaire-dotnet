@@ -56,7 +56,7 @@ class Departement {
             2023-12-01 15:00:00 |      6 | departement1   |               900
             2023-12-01 16:00:00 |      5 | departement1   |               750
             2023-12-01 17:00:00 |      4 | departement1   |               600
-
+            
     */
 
     public List<Luminiosite> getLuminiosite_departement_panneau(NpgsqlConnection liaisonbase,DateTime date){
@@ -109,7 +109,7 @@ class Departement {
 
     }
 
-    public double getcapacitepanneau(NpgsqlConnection liaisonbase){
+    public double getcapacitebatterie(NpgsqlConnection liaisonbase){
         String sql = "SELECT * FROM puisssance_source_departement WHERE id_departement = @id_departement AND typesource = 1";
 
         if(liaisonbase == null || liaisonbase.State == ConnectionState.Closed){
@@ -147,4 +147,58 @@ class Departement {
 
         return capacite;
     }
+
+
+    /****
+
+        liste luminiosite avec capacite panneau et capacite batterie jusqu au coupure ou a 5h
+
+
+        niveau batterie = 7 000 W
+        consommation total eleve /h = 3 000 W
+
+                dateheure      | niveau | id_departement | puissance_panneau  | niveau batterie 
+            -------------------+--------+----------------+------------------+-------------------
+            2023-12-01 08:00:00 |      6 | departement1   |               900 | 4900
+            2023-12-01 09:00:00 |      7 | departement1   |              1050 | 2950
+            2023-12-01 10:00:00 |      8 | departement1   |              1200 | 1150
+            2023-12-01 11:00:00 |      9 | departement1   |              1350 | 0
+            2023-12-01 12:00:00 |     10 | departement1   |              1500 | X
+            2023-12-01 13:00:00 |      8 | departement1   |              1200 | X
+            2023-12-01 14:00:00 |      7 | departement1   |              1050 | X
+            2023-12-01 15:00:00 |      6 | departement1   |               900 | X
+            2023-12-01 16:00:00 |      5 | departement1   |               750 | X
+            2023-12-01 17:00:00 |      4 | departement1   |               600 | X
+    
+    */
+    public List<Luminiosite> coupurewithconsommationteste(NpgsqlConnection liaisonbase,double consomation_eleve,List<Luminiosite> liste_luminiosite,double capacite_batterie){
+        
+        Console.WriteLine("------------------------------------------------------");
+        Console.WriteLine("classe : Departement");
+        Console.WriteLine("nom fonction : coupurewithconsommationteste");
+        
+        int i=0;
+        double puissance_panneau = 0;
+        List<Luminiosite> liste = new List<Luminiosite>();
+        while(capacite_batterie > 0){
+            puissance_panneau = liste_luminiosite[i].getPuissance_panneau();
+            if(puissance_panneau<consomation_eleve){
+                capacite_batterie = capacite_batterie - (consomation_eleve-puissance_panneau);
+            }
+
+            //si negatif => capacite_batterie = 0 (controle set)
+            liste_luminiosite[i].setReste_batterie(capacite_batterie);
+            liste.Add(liste_luminiosite[i]);
+            i++;
+        }
+
+        Console.WriteLine("reponse : ");
+
+        foreach (Luminiosite element in liste)
+        {
+            Console.WriteLine(element.getDateheure()+"  "+ element.getNiveau().ToString()+"  "+element.getId_departement()+"  "+element.getPuissance_panneau().ToString()+" "+element.getReste_batterie().ToString());
+        }
+
+        return liste;
+    }   
 }

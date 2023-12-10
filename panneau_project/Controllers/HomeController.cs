@@ -17,7 +17,8 @@ public class HomeController : Controller
     {
         DateTime date = DateTime.Parse("2023-12-01");
         Departement departement = new Departement("departement1","departementA");
-        double capacite = departement.getcapacitepanneau(null);
+        List<Luminiosite> liste = departement.getLuminiosite_departement_panneau(null,date);
+        List<Luminiosite> listebat = departement.coupurewithconsommationteste(null,3000,liste,7000);
         return View();
     }
 
