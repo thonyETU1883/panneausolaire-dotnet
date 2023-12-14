@@ -1,0 +1,22 @@
+@{
+  List<Departement> listedepartement = ViewBag.listedepartement;
+} 
+    <div class="container col-6">
+        <form action="Home/verscoupure" method="get">
+            <h1>Prevision coupure</h1>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Departement :</label>
+                <select class="form-select" aria-label="Disabled select example" name="id_departement">
+                    
+                    @foreach(Departement departement in listedepartement){
+                        <option value="@departement.getId_departement()" >@departement.getNom_departement()</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Date</label>
+                <input type="date" class="form-control" id="exampleInputPassword1" name="date">
+            </div>
+            <button type="submit" class="btn btn-primary">Valider</button>
+        </form>
+    </div>

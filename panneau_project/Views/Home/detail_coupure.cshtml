@@ -1,0 +1,27 @@
+@{
+    List<Luminiosite> liste = ViewBag.liste;
+}
+    <div class="container col-6">
+        <h1>Detail coupure</h1>
+        <p>departement  : @ViewBag.departement.getId_departement()</p>
+        <p>Date : @ViewBag.date</p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Heure</th>
+                <th scope="col">Etat de batterie</th>
+                <th scope="col">Etat panneau solaire</th>
+            </tr>
+            </thead>
+            <tbody>
+            
+            @foreach(Luminiosite luminiosite in liste){
+                <tr>
+                    <th scope="row">@luminiosite.getDateheure()</th>
+                    <td>@luminiosite.getReste_batterie()</td>
+                    <td>@luminiosite.getPuissance_panneau()</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+      </div>

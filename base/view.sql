@@ -138,3 +138,16 @@ FROM
   luminiosite CROSS JOIN puisssance_source_departement
 WHERE puisssance_source_departement.typesource = 0  
 ;
+
+
+/*
+     id_departement |    date    | nombre
+    ----------------+------------+--------
+    departement1   | 2023-02-02 |    135
+
+*/
+CREATE VIEW number_eleve_departement AS 
+SELECT departement_salle.id_departement,date,SUM(moyenneday) as nombre FROM nombre_salle_view
+JOIN departement_salle ON departement_salle.id_salle = nombre_salle_view.id_salle
+GROUP BY date,departement_salle.id_departement 
+;
