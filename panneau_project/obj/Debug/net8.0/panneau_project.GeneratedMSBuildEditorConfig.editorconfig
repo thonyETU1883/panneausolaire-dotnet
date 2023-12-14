@@ -18,6 +18,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\ratah\c#\panneausolaire-dotnet\panneau_project
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/ratah/c\#/panneausolaire-dotnet/panneau_project/Views/Home/coupure.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxjb3VwdXJlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ratah/c\#/panneausolaire-dotnet/panneau_project/Views/Home/detail_coupure.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxkZXRhaWxfY291cHVyZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/ratah/c\#/panneausolaire-dotnet/panneau_project/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -26,8 +34,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxtYW5nZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/ratah/c\#/panneausolaire-dotnet/panneau_project/Views/Home/previsionformulaire.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxwcmV2aXNpb25mb3JtdWxhaXJlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/ratah/c\#/panneausolaire-dotnet/panneau_project/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ratah/c\#/panneausolaire-dotnet/panneau_project/Views/Home/teste.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVx0ZXN0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/ratah/c\#/panneausolaire-dotnet/panneau_project/Views/Shared/Error.cshtml]

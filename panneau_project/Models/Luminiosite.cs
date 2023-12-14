@@ -32,6 +32,11 @@ class Luminiosite{
 
     public Luminiosite(){}
 
+    public Luminiosite(DateTime dateheure,int niveau){
+        this.setDateheure(dateheure);
+        this.setNiveau(niveau);
+    }
+
     public Luminiosite(DateTime dateheure,int niveau,String id_departement,double puissance_panneau,double reste_batterie){
         this.setDateheure(dateheure);
         this.setNiveau(niveau);
