@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Routing.Constraints;
 using Npgsql;
 using System.Data;
 namespace panneau_project.Models;
@@ -28,7 +29,9 @@ class Luminiosite{
     int Niveau;
     String Id_departement;
     double Puissance_panneau;
+
     double Reste_batterie;
+    double Reste_panneau;
 
     public Luminiosite(){}
 
@@ -37,14 +40,22 @@ class Luminiosite{
         this.setNiveau(niveau);
     }
 
-    public Luminiosite(DateTime dateheure,int niveau,String id_departement,double puissance_panneau,double reste_batterie){
+    public Luminiosite(DateTime dateheure,int niveau,String id_departement,double puissance_panneau,double reste_batterie,double reste_panneau){
         this.setDateheure(dateheure);
         this.setNiveau(niveau);
         this.setId_departement(id_departement);
         this.setPuissance_panneau(puissance_panneau);
         this.setReste_batterie(reste_batterie);
+        this.setReste_panneau(reste_panneau);
     }
 
+
+    public void setReste_panneau(double reste_panneau){
+        if(reste_panneau < 0){
+            reste_panneau = 0;
+        }
+        this.Reste_panneau = reste_panneau;
+    }
     public void setDateheure(DateTime dateheure){
         this.Dateheure = dateheure;
     }
@@ -68,6 +79,17 @@ class Luminiosite{
         this.Reste_batterie=reste_batterie;
     }
 
+    public void setReste_batterie(double reste_batterie,double maxbatterie){
+        if(reste_batterie > maxbatterie){
+            reste_batterie = maxbatterie;
+        }else if(reste_batterie<0){
+            reste_batterie =0;
+        }
+
+
+        this.Reste_batterie=reste_batterie;
+    }
+
     public DateTime getDateheure(){
         return this.Dateheure;
     }
@@ -86,6 +108,10 @@ class Luminiosite{
 
     public double getReste_batterie(){
         return this.Reste_batterie;
+    }
+
+    public double getReste_panneau(){
+        return this.Reste_panneau;
     }
 } 
 

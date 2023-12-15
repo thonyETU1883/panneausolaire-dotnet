@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("panneau_project")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+894ae8ba1a5466acfa0cb030784bce7637312c93")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("panneau_project")]
 [assembly: System.Reflection.AssemblyTitleAttribute("panneau_project")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

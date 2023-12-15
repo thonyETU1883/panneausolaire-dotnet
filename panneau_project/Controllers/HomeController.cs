@@ -30,7 +30,6 @@ public class HomeController : Controller
         Departement departement = new Departement(id_departement);
         Connexion connexion = new Connexion();
         NpgsqlConnection liaisonbase = connexion.createLiaisonBase(); 
-        departement.getdepartementbyid(liaisonbase);
 
         List<Luminiosite> liste_luminiosite = new List<Luminiosite>();
         liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-21 08:00:00"),8));
@@ -56,38 +55,41 @@ public class HomeController : Controller
         Departement departement = new Departement(id_departement);
         Connexion connexion = new Connexion();
         NpgsqlConnection liaisonbase = connexion.createLiaisonBase(); 
-        departement.getdepartementbyid(liaisonbase);
 
         List<Luminiosite> liste_luminiosite = new List<Luminiosite>();
-        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-21 08:00:00"),1));
-        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-21 09:00:00"),2));
-        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-21 10:00:00"),4));
-        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-21 11:00:00"),6));
-        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-21 12:00:00"),7));
-        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-21 13:00:00"),6));
-        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-21 14:00:00"),5));
-        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-21 15:00:00"),3));
-        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-21 16:00:00"),1));
-        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-21 17:00:00"),1));
+        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-20 08:00:00"),9));
+        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-20 09:00:00"),9));
+        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-20 10:00:00"),9));
+        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-20 11:00:00"),9));
+        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-20 14:00:00"),9));
+        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-20 15:00:00"),9));
+        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-20 16:00:00"),9));
+        liste_luminiosite.Add(new Luminiosite(DateTime.Parse("2023-12-20 17:00:00"),9));
 
 
         List<Luminiosite> listedetail = departement.todoprevision(liaisonbase,datetime,liste_luminiosite);
+        double consommation= departement.moyenne_consommation(liaisonbase);
+        double nombre_eleve = departement.getnumberelevebynamedate(liaisonbase,datetime); 
         ViewBag.liste = listedetail;
         ViewBag.date = date;
+        ViewBag.consommation =consommation; 
+        ViewBag.nombre_eleve = nombre_eleve;
+        ViewBag.total_consommation = consommation*nombre_eleve;
         ViewBag.departement = departement;
+        ViewBag.capacitebatterie = departement.getcapacitebatterie(liaisonbase);
 
 
         return View("detail_coupure");
     }
 
     public IActionResult teste(){
-        DateTime datetime = DateTime.Parse("2023-11-06");
+        DateTime datetime = DateTime.Parse("2023-12-13");
         Departement departement = new Departement("departement1","A");
         double a = departement.getConsommationDepartement(null,datetime);
         //Console.WriteLine("ok : "+a.ToString());
         //List<Luminiosite> liste = departement.getLuminiosite_departement_panneau(null,datetime);
-        //DateTime a = departement.coupurewithconsommationteste(null,28800,liste);
-        //Console.WriteLine("ok : "+a);
+         //DateTime a = departement.coupurewithconsommationteste(null,17299.999999999999,liste);
+     Console.WriteLine("ok : "+a);
         return View();
     }
 
