@@ -165,32 +165,51 @@ class Departement {
     
     */
     public List<Luminiosite> detail_coupurewithconsommationteste(NpgsqlConnection liaisonbase,double consomation_eleve,List<Luminiosite> liste_luminiosite){
+        Console.WriteLine("--------------------------------------------------");
         
-        double capacite_batterie = this.getcapacitebatterie(null);
+        Console.WriteLine("consommation : "+consomation_eleve.ToString());
+        Console.WriteLine("--------------------------------------------------");
+        double capacite_batterie = this.getcapacitebatterie(liaisonbase);
+        Console.WriteLine("capacite batterie : "+capacite_batterie.ToString());
+        Console.WriteLine("--------------------------------------------------");
+
+        double c_b = capacite_batterie;
         int i=0;
         double puissance_panneau = 0;
+        double c_b_initial = 0;
+        double heure_coupure_batterie =0;
+        double heure_coupure_panneau = 0;
         List<Luminiosite> liste = new List<Luminiosite>();
-        while(capacite_batterie > 0){
+        while(c_b > 0 && i<liste_luminiosite.Count){
             puissance_panneau = liste_luminiosite[i].getPuissance_panneau();
-            double reste_consommationeleve = consomation_eleve-puissance_panneau;
-            if(puissance_panneau<consomation_eleve && reste_consommationeleve<capacite_batterie){
-                capacite_batterie = capacite_batterie - reste_consommationeleve;
-            }else if(puissance_panneau<consomation_eleve && reste_consommationeleve>capacite_batterie){
-                double heure_coupure_batterie = capacite_batterie / consomation_eleve;
-                double heure_coupure_panneau = puissance_panneau / consomation_eleve;
-                capacite_batterie = 0;
+            double reste_consommationeleve = puissance_panneau-consomation_eleve;
+           
+            Console.WriteLine("reste : "+reste_consommationeleve.ToString());
+            Console.WriteLine("c_b : "+c_b.ToString());
+            c_b_initial = c_b; 
+            c_b = c_b+reste_consommationeleve;
+            
+            liste_luminiosite[i].setReste_batterie(c_b,capacite_batterie);
+            liste_luminiosite[i].setReste_panneau(reste_consommationeleve);
+
+
+            c_b = liste_luminiosite[i].getReste_batterie();
+            if(c_b<0 || i==(liste_luminiosite.Count-1)){
+                Console.WriteLine("farany c-b :"+c_b_initial.ToString());
+                Console.WriteLine("puissance panneau :"+puissance_panneau.ToString());
+                Console.WriteLine("consommation eleve :"+consomation_eleve.ToString());
+
+                heure_coupure_batterie = c_b_initial / consomation_eleve;
+                heure_coupure_panneau = puissance_panneau / consomation_eleve;
                 DateTime date_coupure = liste_luminiosite[i].getDateheure().AddHours(heure_coupure_batterie+heure_coupure_panneau);
                 liste_luminiosite[i].setDateheure(date_coupure);
             }
-
-            //si negatif => capacite_batterie = 0 (controle set)
-            liste_luminiosite[i].setReste_batterie(capacite_batterie);
+            Console.WriteLine("heure : "+liste_luminiosite[i].getDateheure());
+            Console.WriteLine("puissance panneau : "+liste_luminiosite[i].getReste_panneau().ToString());
+            Console.WriteLine("reste batterie "+liste_luminiosite[i].getReste_batterie().ToString());
+            Console.WriteLine("-----------------------------------------------------------");
             liste.Add(liste_luminiosite[i]);
             i++;
-        }
-
-        foreach(Luminiosite l in liste){
-            Console.WriteLine(l.getDateheure()+" "+l.getNiveau()+" "+l.getId_departement()+" "+l.getPuissance_panneau()+" "+l.getReste_batterie()+" ");
         }
 
         return liste;
@@ -199,24 +218,65 @@ class Departement {
     public DateTime coupurewithconsommationteste(NpgsqlConnection liaisonbase,double consomation_eleve,List<Luminiosite> liste_luminiosite){
         
         double capacite_batterie = this.getcapacitebatterie(liaisonbase);
+        double c_b = capacite_batterie;
+        int i=0;
         double puissance_panneau = 0;
-        int i =0;
-        while(capacite_batterie > 0 && i<liste_luminiosite.Count){
+        double heure_coupure_batterie = 0;
+        double heure_coupure_panneau =0;
+        double c_b_initial = 0;
+        while(c_b > 0 && i<liste_luminiosite.Count){
             puissance_panneau = liste_luminiosite[i].getPuissance_panneau();
-            double reste_consommationeleve = consomation_eleve-puissance_panneau;
-            if(puissance_panneau<consomation_eleve && reste_consommationeleve<capacite_batterie){
-                capacite_batterie = capacite_batterie - reste_consommationeleve;
-            }else if(puissance_panneau<consomation_eleve && reste_consommationeleve>capacite_batterie){
-                double heure_coupure_batterie = capacite_batterie / consomation_eleve;
-                double heure_coupure_panneau = puissance_panneau / consomation_eleve;
-                capacite_batterie = 0;
+            double reste_consommationeleve = puissance_panneau-consomation_eleve;
+            /*if(puissance_panneau<consomation_eleve && reste_consommationeleve<c_b){
+                c_b = c_b - reste_consommationeleve;
+            }else if(puissance_panneau<consomation_eleve && reste_consommationeleve>c_b){
+                heure_coupure_batterie = c_b / consomation_eleve;
+                heure_coupure_panneau = puissance_panneau / consomation_eleve;
+                c_b = 0;
                 DateTime date_coupure = liste_luminiosite[i].getDateheure().AddHours(heure_coupure_batterie+heure_coupure_panneau);
+                liste_luminiosite[i].setDateheure(date_coupure);
                 return date_coupure;
+            }else if(puissance_panneau>consomation_eleve){
+                double reste = puissance_panneau-consomation_eleve;
+                c_b = c_b+reste;
+            }*/
+            Console.WriteLine("reste : "+reste_consommationeleve.ToString());
+            Console.WriteLine("c_b : "+c_b.ToString());
+            c_b_initial = c_b; 
+            c_b = c_b+reste_consommationeleve;
+
+            
+            liste_luminiosite[i].setReste_batterie(c_b,capacite_batterie);
+            liste_luminiosite[i].setReste_panneau(reste_consommationeleve);
+
+
+            c_b = liste_luminiosite[i].getReste_batterie();
+            if(c_b<0 || i==(liste_luminiosite.Count-1)){
+                Console.WriteLine("farany c-b :"+c_b_initial.ToString());
+                Console.WriteLine("puissance panneau :"+puissance_panneau.ToString());
+                Console.WriteLine("consommation eleve :"+consomation_eleve.ToString());
+
+                heure_coupure_batterie = c_b_initial / consomation_eleve;
+                heure_coupure_panneau = puissance_panneau / consomation_eleve;
+                DateTime date_coupure = liste_luminiosite[i].getDateheure().AddHours(heure_coupure_batterie+heure_coupure_panneau);
+                liste_luminiosite[i].setDateheure(date_coupure);
             }
+            Console.WriteLine("heure : "+liste_luminiosite[i].getDateheure());
+            Console.WriteLine("puissance panneau : "+liste_luminiosite[i].getReste_panneau().ToString());
+            Console.WriteLine("reste batterie "+liste_luminiosite[i].getReste_batterie().ToString());
+            Console.WriteLine("-----------------------------------------------------------");
+
             i++;
         }
-        return liste_luminiosite[i-1].getDateheure();
+
+        puissance_panneau = liste_luminiosite[i-1].getPuissance_panneau();
+        heure_coupure_batterie = c_b / consomation_eleve;
+        heure_coupure_panneau = puissance_panneau / consomation_eleve;
+
+
+        return liste_luminiosite[i-1].getDateheure().AddHours(heure_coupure_batterie+heure_coupure_panneau);
     }
+    
 
     /**
          id_departement |  dateheure_coupure
@@ -337,14 +397,10 @@ class Departement {
     }
 
      public double getConsommationDepartement(NpgsqlConnection liaisonbase,DateTime date){
-        Console.WriteLine("manomboka");
         double consommation = this.maxcapacite(liaisonbase);
         DateTime date_coupure = this.getcoupuredepartementbydate(liaisonbase,date); 
         DateTime date_coupure_teste = DateTime.MinValue;
         List<Luminiosite> liste_luminiosite = this.getLuminiosite_departement_panneau(liaisonbase,date);
-        Console.WriteLine("de : "+liste_luminiosite.Count.ToString());
-        Console.WriteLine("da : "+date);
-        Console.WriteLine("dacoupure : "+date_coupure);
         
         double a = 0;
         double b = consommation;
@@ -353,13 +409,12 @@ class Departement {
         int i=200;
         TimeSpan difference = date_coupure.Subtract(date_coupure_teste);
         TimeSpan difference_positif = TimeSpan.FromTicks(Math.Abs(difference.Ticks));
-        while(difference_positif.TotalMinutes > 0){
+        while(difference_positif.TotalMinutes > 1){
+            c = (a+b)/2;
+            Console.WriteLine("a : "+(a/290).ToString());
+            Console.WriteLine("b : "+(b/290).ToString());
+            Console.WriteLine("c : "+(c/290).ToString());
             date_coupure_teste = this.coupurewithconsommationteste(liaisonbase,c,liste_luminiosite);
-            Console.WriteLine("a : "+a.ToString());
-            Console.WriteLine("b : "+b.ToString());
-            Console.WriteLine("c : "+c.ToString());
-            Console.WriteLine("d : "+date_coupure_teste);
-            Console.WriteLine("---------------------------------------------");
             
             if(date_coupure_teste < date_coupure){
                 b = c;
@@ -367,20 +422,20 @@ class Departement {
                 a = c;
             }
 
-            if(i<0){
+            if((b-a)<(1e-6)){
                 break;
             }
-            i--;
+            
             difference = date_coupure.Subtract(date_coupure_teste);
             difference_positif = TimeSpan.FromTicks(Math.Abs(difference.Ticks));
-            c = (a+b)/2;
         }
         difference = date_coupure.Subtract(date_coupure_teste);
         difference_positif = TimeSpan.FromTicks(Math.Abs(difference.Ticks));
             
-        double nombre_eleve = this.getmoyenneelevebydate(liaisonbase,date);
-        Console.WriteLine("eleve : "+nombre_eleve);
-        Console.WriteLine("valiny : "+(c/nombre_eleve));
+        double nombre_eleve = this.getnumberelevebynamedate(liaisonbase,date);
+      
+  
+
         return c/nombre_eleve;
     }
 
@@ -411,7 +466,6 @@ class Departement {
     }
 
     public double moyenne_consommation(NpgsqlConnection liaisonbase){
-        Console.WriteLine("ato");
         List<DateTime> listedate = this.getdate_exist(liaisonbase);
         double somme = 0;
         foreach(DateTime date in listedate){
@@ -517,7 +571,7 @@ class Departement {
         return listedepartement;
     }
 
-    public void getdepartementbyid(NpgsqlConnection liaisonbase){
+    /*public void getdepartementbyid(NpgsqlConnection liaisonbase){
          String sql = "SELECT * FROM departement WHERE id_departement = @id_departement";
         if(liaisonbase == null || liaisonbase.State == ConnectionState.Closed){
             Connexion connexion = new Connexion ();
@@ -542,5 +596,5 @@ class Departement {
                 liaisonbase.Close();
             }
         }
-    }
+    }*/
 }

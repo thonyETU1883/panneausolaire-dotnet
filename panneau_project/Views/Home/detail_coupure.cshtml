@@ -5,12 +5,18 @@
         <h1>Detail coupure</h1>
         <p>departement  : @ViewBag.departement.getId_departement()</p>
         <p>Date : @ViewBag.date</p>
+        <p>Consommation : @ViewBag.consommation</p>
+        <p>Nombre eleve : @ViewBag.nombre_eleve</p>
+        <p>Total Consommation : @ViewBag.total_consommation</p>
+        <p>Capacite batterie : @ViewBag.capacitebatterie</p>
+        
         <table class="table">
             <thead>
             <tr>
                 <th scope="col">Heure</th>
-                <th scope="col">Etat de batterie</th>
+                <th scope="col">reste de batterie</th>
                 <th scope="col">Etat panneau solaire</th>
+                <th scope="col">reste panneau solaire</th>
             </tr>
             </thead>
             <tbody>
@@ -20,6 +26,7 @@
                     <th scope="row">@luminiosite.getDateheure()</th>
                     <td>@luminiosite.getReste_batterie()</td>
                     <td>@luminiosite.getPuissance_panneau()</td>
+                    <td>@luminiosite.getReste_panneau()</td>
                 </tr>
             }
             </tbody>
